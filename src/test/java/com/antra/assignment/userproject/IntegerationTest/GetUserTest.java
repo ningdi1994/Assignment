@@ -1,4 +1,4 @@
-package com.antra.assignment.userproject.JunitTest;
+package com.antra.assignment.userproject.IntegerationTest;
 
 
 import com.antra.assignment.userproject.bean.UserEntity;
@@ -22,10 +22,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 import static io.restassured.module.mockmvc.RestAssuredMockMvc.given;
 import static org.mockito.Matchers.anyInt;
 
-
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class GetUserTest {
 
-    @Mock
+    @Autowired
     UserFindService findService;
 
     @Before
@@ -36,7 +37,7 @@ public class GetUserTest {
 
     @Test
     public void testGetUser() {
-        given().accept("application/json").get("users/"+anyInt())
+        given().accept("application/json").get("users/"+anyInt()).peek()
                 .then().assertThat().statusCode(200).body("id",Matchers.equalTo(0))
                 .body("UserAge", Matchers.equalTo(18))
                 .body("UserName",Matchers.equalTo("ning"))
